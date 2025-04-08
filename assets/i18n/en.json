@@ -43,4 +43,86 @@
   "confirmDeleteMessage": "Are you sure you want to delete this expense?",
   "undo": "UNDO",
   "noExpensesYet": "No expenses yet. Tap + to add one."
+=======
+  "app": {
+    "title": "Final Project"
+  },
+  "home": {
+    "title": "Main"
+  },
+  "language": {
+    "select": "Select Language"
+  },
+  "button":
+    "1": "Event Planner",
+    "3": "Button 3",
+    "4": "Button 4",
+    "ok": "OK"
+  },
+  "customer": {
+    "list": "Customer List",
+    "no_customers": "No customers available. Please add one.",
+    "add": "Add Customer",
+    "details": "Customer Details",
+    "select": "Select a customer to view details",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "address": "Address",
+    "birthday": "Birthday (YYYY-MM-DD)",
+    "update": "Update",
+    "delete": "Delete",
+    "added": "Added Customer",
+    "added_success": "Customer added successfully!",
+    "update_success": "Customer details have been updated.",
+    "update_failed": "Update Failed",
+    "delete_success": "Customer Deleted",
+    "delete_message": "This customer has been removed from the database.",
+    "delete_failed": "Delete Failed",
+    "alert": "Alert!",
+    "error": "An error occurred while adding the customer.",
+    "fill_fields": "Please fill all fields correctly!",
+    "confirm_delete": "Do you want to delete this customer?",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "en":
+  {
+    "app_title": "Group Project",
+    "event_planner": "Event Planner",
+    "customer_list": "Customer List",
+    "expense_tracker": "Expense Tracker",
+    "vehicle_maintenance": "Vehicle Maintenance",
+  
+    "change_language": "Change Language",
+    "english": "English",
+    "french": "French",
+    "language_changed": "Language changed to English",
+  
+    "events": "Events",
+    "add_event": "Add Event",
+    "event_name": "Event Name",
+    "event_date": "Date",
+    "event_time": "Time",
+    "event_location": "Location",
+    "event_description": "Description",
+    "submit": "Submit",
+    "update": "Update",
+    "delete": "Delete",
+    "copy_previous": "Copy from Previous",
+    "help": "Help",
+    "required_fields": "All fields are required",
+    "confirm_delete": "Confirm Delete",
+    "delete_message": "Are you sure you want to delete this event?",
+    "yes": "Yes",
+    "no": "No",
+    "cancel": "Cancel",
+    "event_added": "Event added successfully",
+    "event_updated": "Event updated successfully",
+    "event_deleted": "Event deleted successfully",
+    "no_events": "No events found. Add a new event to get started.",
+    "help_title": "Event Planner Help",
+    "help_message": "To add a new event, tap the plus button and fill all required fields.\n\nTo view event details, tap on an event from the list.\n\nTo update an event, view its details and edit the fields, then tap Update.\n\nTo delete an event, view its details and tap Delete.\n\nYou can copy information from your previous event by tapping \"Copy from Previous\" when adding a new event.",
+    "pick_date": "Pick a date",
+    "pick_time": "Pick a time"
+  }
 }
