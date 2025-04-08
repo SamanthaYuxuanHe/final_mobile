@@ -1,16 +1,22 @@
-import 'package:final_mobile/database.dart';
-import 'package:floor/floor.dart';
+import 'package:final_mobile/customer_list_page.dart';
 import 'package:final_mobile/event_planner_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'customer_list_page.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  sqfliteFfiInit();
+  databaseFactory = databaseFactoryFfi;
+
   var delegate = await LocalizationDelegate.create(
-      fallbackLocale: 'en',
-      supportedLocales: ['en', 'zh'],
-      preferences: TranslatePreferences());
+    fallbackLocale: 'en',
+    supportedLocales: ['en', 'fr'],
+    preferences: TranslatePreferences(),
+  );
+
   runApp(LocalizedApp(delegate, const MyApp()));
 }
 
@@ -43,6 +49,8 @@ class MyHomePage extends StatelessWidget {
   const MyHomePage({
     super.key,
   });
+
+  get localizations => null;
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +96,16 @@ class MyHomePage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CustomButton(text: translate('button.1'), onPressed: () {}),
+              CustomButton(
+                  text: translate("button.1"),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const EventPlannerPage(),
+                      ),
+                    );
+                  }),
               SizedBox(height: 16),
               CustomButton(
                 text: translate('customer.list'),
@@ -100,7 +117,6 @@ class MyHomePage extends StatelessWidget {
                     ),
                   );
                 },
-                //
               ),
               SizedBox(height: 16),
               CustomButton(text: translate('button.3'), onPressed: () {}),

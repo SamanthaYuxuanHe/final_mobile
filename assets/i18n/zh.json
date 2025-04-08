@@ -39,5 +39,44 @@
       "confirm_delete": "您要删除此客户吗？",
       "yes": "是",
       "no": "否"
-    }
+    },
+
+      "app_title": "团队项目",
+      "event_planner": "事件规划器",
+      "customer_list": "客户列表",
+      "expense_tracker": "开支追踪",
+      "vehicle_maintenance": "车辆维护",
+  
+      "change_language": "更改语言",
+      "english": "英语",
+      "chinese": "中文",
+      "language_changed": "语言已更改为中文",
+  
+      "events": "事件",
+      "add_event": "添加事件",
+      "event_name": "事件名称",
+      "event_date": "日期",
+      "event_time": "时间",
+      "event_location": "地点",
+      "event_description": "描述",
+      "submit": "提交",
+      "update": "更新",
+      "delete": "删除",
+      "copy_previous": "复制之前的",
+      "help": "帮助",
+      "required_fields": "所有字段都是必填的",
+      "confirm_delete": "确认删除",
+      "delete_message": "你确定要删除这个事件吗?",
+      "yes": "是",
+      "no": "否",
+      "cancel": "取消",
+      "event_added": "事件已成功添加",
+      "event_updated": "事件已成功更新",
+      "event_deleted": "事件已成功删除",
+      "no_events": "没有找到事件。请添加新事件开始。",
+      "help_title": "事件规划器帮助",
+      "help_message": "要添加新事件，请点击加号按钮并填写所有必填字段。\n\n要查看事件详情，请点击列表中的事件。\n\n要更新事件，请查看其详情并修改字段，然后点击更新。\n\n要删除事件，请查看其详情并点击删除。\n\n您可以在添加新事件时，通过点击“复制之前的”来复制上一个事件的信息。",
+      "pick_date": "选择日期",
+      "pick_time": "选择时间"
   }
+  
