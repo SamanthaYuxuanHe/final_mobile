@@ -1,4 +1,5 @@
 import 'package:floor/floor.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
 @entity
 class VehicleMaintenanceItem {
@@ -13,22 +14,44 @@ class VehicleMaintenanceItem {
   final double mileage;
   final double cost;
 
-  VehicleMaintenanceItem(this.id, this.vehicleName, this.vehicleType, this.serviceType, this.serviceDate, this.mileage, this.cost){
+  VehicleMaintenanceItem(this.id, this.vehicleName, this.vehicleType,
+      this.serviceType, this.serviceDate, this.mileage, this.cost) {
     if (id > ID) {
       ID = id + 1;
-    }else{
+    } else {
       ID = id;
     }
   }
 
   @override
   String toString() {
-    return "id: " + this.id.toString()
-        + "\nvehicle name: " + this.vehicleName
-        + "\nvehicle type: " + this.vehicleType
-        + "\nservice type: " + this.serviceType
-        + "\nvehicle date: " + this.serviceDate
-        + "\nmilage: " + this.mileage.toString()
-        + "\ncost: " + this.cost.toString() +"\n";
+    return translate("vehicle.id") +
+        ": " +
+        this.id.toString() +
+        "\n" +
+        translate("vehicle.vehicle_name") +
+        ": " +
+        this.vehicleName +
+        "\n" +
+        translate("vehicle.vehicle_type") +
+        ": " +
+        this.vehicleType +
+        "\n" +
+        translate("vehicle.service_type") +
+        ": " +
+        this.serviceType +
+        "\n" +
+        translate("vehicle.service_date") +
+        ": " +
+        this.serviceDate +
+        "\n" +
+        translate("vehicle.mileage") +
+        ": " +
+        this.mileage.toString() +
+        "\n" +
+        translate("vehicle.cost") +
+        ": " +
+        this.cost.toString() +
+        "\n";
   }
 }

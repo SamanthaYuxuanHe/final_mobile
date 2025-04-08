@@ -109,8 +109,19 @@ class _MyHomePageState extends State<MyHomePage> {
                   onPressed: () {
                     VehicleMaintenanceDataRepository.button = "Add";
                     Navigator.pushNamed(context, "/AddVehicleMaintenance");
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AddVehicleMaintenancePage(),
+                      ),
+                    );
                   },
                   child: Text(translate('vehicle.add_maintenance'))),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context, rootNavigator: true).pop(context);
+                  },
+                  child: Text(translate("vehicle.cancel"))),
               Expanded(
                   child: Center(
                       child: ListView.builder(
@@ -127,8 +138,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 children: [
                                   GestureDetector(
                                     child: Text(listItem),
-                                    onLongPress: () =>
-                                        dialogBuilder(context, rowNum),
+                                    onTap: () => dialogBuilder(context, rowNum),
                                   )
                                 ]);
                           })))
@@ -150,6 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   onPressed: () {
                     VehicleMaintenanceDataRepository.button = "Update";
                     VehicleMaintenanceDataRepository.id = list[rowNum].id; //id
+                    VehicleMaintenanceDataRepository.rowNum = rowNum; //rowNum
                     VehicleMaintenanceDataRepository.saveData('vehicle_name',
                         list[rowNum].vehicleName); //vehicle_name
                     VehicleMaintenanceDataRepository.saveData('vehicle_type',
@@ -162,7 +173,16 @@ class _MyHomePageState extends State<MyHomePage> {
                         'mileage', list[rowNum].mileage.toString()); //mileage
                     VehicleMaintenanceDataRepository.saveData(
                         'cost', list[rowNum].cost.toString()); //cost
-                    Navigator.pushNamed(context, "/UpdateVehicleMaintenance");
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            const UpdateVehicleMaintenancePage(),
+                      ),
+                    ).then((value) {
+                      // This code will execute after the UpdateVehicleMaintenancePage has been popped
+                      Navigator.of(context).pop();
+                    });
                   },
                 ),
                 TextButton(

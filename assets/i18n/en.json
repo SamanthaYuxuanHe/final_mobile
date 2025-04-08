@@ -139,6 +139,8 @@
       "mileage": "Mileage",
       "cost": "Cost",
       "add": "Add",
-      "delete": "Delete"
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "id":"ID"
   }
   }

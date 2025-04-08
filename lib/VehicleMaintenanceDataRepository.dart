@@ -8,6 +8,7 @@ class VehicleMaintenanceDataRepository {
   static var list;
   static String button = "Add";
   static int id = -1;
+  static int rowNum = -1;
   static EncryptedSharedPreferences esp = EncryptedSharedPreferences();
 
   static void getData(String key) {
@@ -17,7 +18,7 @@ class VehicleMaintenanceDataRepository {
   }
 
   static void loadData(String key, TextEditingController controller) {
-    esp.getString(key).then((String value){
+    esp.getString(key).then((String value) {
       controller.text = value;
     });
   }

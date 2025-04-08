@@ -174,7 +174,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   onPressed: () {
                     Navigator.of(context, rootNavigator: true).pop(context);
                   },
-                  child: Text("Cancel")),
+                  child: Text(translate("vehicle.cancel"))),
             ])));
   }
 
@@ -205,6 +205,7 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Text(translate("vehicle.add")));
     } else if (button.compareTo("Update") == 0) {
       int id = VehicleMaintenanceDataRepository.id;
+      int rowNum = VehicleMaintenanceDataRepository.rowNum;
       var myDAO = VehicleMaintenanceDataRepository.myDAO;
 
       return Column(children: [
@@ -232,7 +233,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ElevatedButton(
             onPressed: () {
               setState(() {
-                myDAO?.deleteItem(list[id]);
+                myDAO?.deleteItem(list[rowNum]);
                 Navigator.of(context, rootNavigator: true).pop(context);
               });
             },

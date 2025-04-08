@@ -139,7 +139,9 @@
         "mileage": "里程",
         "cost": "费用",
         "add": "添加",
-        "delete": "删除"
+        "delete": "删除",
+        "cancel": "取消",
+        "id": "ID"
       }
   }
   
