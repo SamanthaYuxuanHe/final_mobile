@@ -36,7 +36,41 @@ class _CustomerListPageState extends State<CustomerListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text(translate('customer.list'))),
+        appBar: AppBar(
+          title: Text(translate('customer.list')),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.language),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: Text(translate('language.select')),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ListTile(
+                          title: Text('English'),
+                          onTap: () {
+                            changeLocale(context, 'en');
+                            Navigator.pop(context);
+                          },
+                        ),
+                        ListTile(
+                          title: Text('中文'),
+                          onTap: () {
+                            changeLocale(context, 'zh');
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
         body: FutureBuilder<AppDatabase>(
             future: _databaseFuture,
             builder: (context, snapshot) {
@@ -249,8 +283,10 @@ class _AddCustomerPageState extends State<AddCustomerPage> {
           birthday: birthdayController.text.trim(),
         ));
       });
-      _showDialog(translate('customer.added'),
-          translate('customer.added_success'), true);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(translate('customer.added_success'))),
+      );
+      Navigator.pop(context, true);
     } catch (e) {
       _showDialog(
           translate('customer.alert'), translate('customer.error'), false);
@@ -260,7 +296,41 @@ class _AddCustomerPageState extends State<AddCustomerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(translate('customer.add'))),
+      appBar: AppBar(
+        title: Text(translate('customer.add')),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.language),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: Text(translate('language.select')),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ListTile(
+                        title: Text('English'),
+                        onTap: () {
+                          changeLocale(context, 'en');
+                          Navigator.pop(context);
+                        },
+                      ),
+                      ListTile(
+                        title: Text('中文'),
+                        onTap: () {
+                          changeLocale(context, 'zh');
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
@@ -377,11 +447,15 @@ class _CustomerDetailPageState extends State<CustomerDetailPage> {
         widget.database.customerDao.updateCustomer(updatedCustomer);
       });
       widget.onCustomerUpdated?.call();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(translate('customer.update_success'))),
+      );
       bool isWideScreen = MediaQuery.of(context).size.width >
               MediaQuery.of(context).size.height &&
           MediaQuery.of(context).size.width > 720;
-      _showDialog(translate('customer.update_success'),
-          translate('customer.update_success'), !isWideScreen);
+      if (!isWideScreen) {
+        Navigator.pop(context);
+      }
     } catch (e) {
       _showDialog(translate('customer.update_failed'),
           translate('customer.error'), false);
@@ -394,11 +468,15 @@ class _CustomerDetailPageState extends State<CustomerDetailPage> {
         widget.database.customerDao.deleteCustomerById(widget.customer.id!);
       });
       widget.onCustomerUpdated?.call();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(translate('customer.delete_success'))),
+      );
       bool isWideScreen = MediaQuery.of(context).size.width >
               MediaQuery.of(context).size.height &&
           MediaQuery.of(context).size.width > 720;
-      _showDialog(translate('customer.delete_success'),
-          translate('customer.delete_message'), !isWideScreen);
+      if (!isWideScreen) {
+        Navigator.pop(context);
+      }
     } catch (e) {
       _showDialog(translate('customer.delete_failed'),
           translate('customer.error'), false);
@@ -428,85 +506,116 @@ class _CustomerDetailPageState extends State<CustomerDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    bool isWideScreen = MediaQuery.of(context).size.width >
-            MediaQuery.of(context).size.height &&
-        MediaQuery.of(context).size.width > 720;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(translate('customer.details')),
-        leading: isWideScreen
-            ? null
-            : IconButton(
-                icon: Icon(Icons.arrow_back),
-                onPressed: () => Navigator.pop(context, !isWideScreen),
-              ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextField(
-              controller: _firstNameController,
-              decoration:
-                  InputDecoration(labelText: translate('customer.first_name')),
-            ),
-            TextField(
-              controller: _lastNameController,
-              decoration:
-                  InputDecoration(labelText: translate('customer.last_name')),
-            ),
-            TextField(
-              controller: _addressController,
-              decoration:
-                  InputDecoration(labelText: translate('customer.address')),
-            ),
-            TextField(
-              controller: _birthdayController,
-              decoration:
-                  InputDecoration(labelText: translate('customer.birthday')),
-              keyboardType: TextInputType.datetime,
-            ),
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                  onPressed: _updateCustomer,
-                  child: Text(translate('customer.update')),
-                ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        bool isWideScreen = constraints.maxWidth > constraints.maxHeight &&
+            constraints.maxWidth > 720;
+        return Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: !isWideScreen,
+            title: Text(translate('customer.details')),
+            actions: [
+              if (!isWideScreen) // Only show language button in narrow screens
                 IconButton(
-                  icon: const Icon(Icons.delete),
+                  icon: Icon(Icons.language),
                   onPressed: () {
                     showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
-                        title: Text(translate('customer.alert')),
-                        content: Text(translate('customer.confirm_delete')),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                              _deleteCustomer();
-                            },
-                            child: Text(translate('customer.yes')),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: Text(translate('customer.no')),
-                          ),
-                        ],
+                        title: Text(translate('language.select')),
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            ListTile(
+                              title: Text('English'),
+                              onTap: () {
+                                changeLocale(context, 'en');
+                                Navigator.pop(context);
+                              },
+                            ),
+                            ListTile(
+                              title: Text('中文'),
+                              onTap: () {
+                                changeLocale(context, 'zh');
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },
                 ),
+            ],
+          ),
+          body: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextField(
+                  controller: _firstNameController,
+                  decoration: InputDecoration(
+                      labelText: translate('customer.first_name')),
+                ),
+                TextField(
+                  controller: _lastNameController,
+                  decoration: InputDecoration(
+                      labelText: translate('customer.last_name')),
+                ),
+                TextField(
+                  controller: _addressController,
+                  decoration:
+                      InputDecoration(labelText: translate('customer.address')),
+                ),
+                TextField(
+                  controller: _birthdayController,
+                  decoration: InputDecoration(
+                      labelText: translate('customer.birthday')),
+                  keyboardType: TextInputType.datetime,
+                ),
+                SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      onPressed: _updateCustomer,
+                      child: Text(translate('customer.update')),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.delete),
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: Text(translate('customer.alert')),
+                            content: Text(translate('customer.confirm_delete')),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  _deleteCustomer();
+                                },
+                                child: Text(translate('customer.yes')),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text(translate('customer.no')),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }
