@@ -46,6 +46,7 @@ class _CustomerListPageState extends State<CustomerListPage> {
         $FloorAppDatabase.databaseBuilder('app_database.db').build();
   }
 
+  ///
   /// Refreshes the list of customers from the database.
   ///
   /// Updates the state to trigger a UI rebuild with the latest customer data.
