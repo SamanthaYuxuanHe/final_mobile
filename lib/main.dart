@@ -14,7 +14,6 @@ void main() async {
   runApp(LocalizedApp(delegate, const MyApp()));
 }
 
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -101,10 +100,10 @@ class MyHomePage extends StatelessWidget {
                     ),
                   );
                 },
+                //
               ),
               SizedBox(height: 16),
               CustomButton(text: translate('button.3'), onPressed: () {}),
-
               SizedBox(height: 16),
               CustomButton(text: translate('button.4'), onPressed: () {}),
             ],
@@ -145,4 +144,3 @@ class TranslatePreferences implements ITranslatePreferences {
   @override
   Future savePreferredLocale(Locale locale) async {}
 }
-
