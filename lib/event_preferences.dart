@@ -1,5 +1,4 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'dart:convert';
 import 'event_model.dart';
 
 /// Secure preferences manager for event data
@@ -33,8 +32,10 @@ class EventPreferences {
     await _secureStorage.write(key: _keyLastEventName, value: event.name);
     await _secureStorage.write(key: _keyLastEventDate, value: event.date);
     await _secureStorage.write(key: _keyLastEventTime, value: event.time);
-    await _secureStorage.write(key: _keyLastEventLocation, value: event.location);
-    await _secureStorage.write(key: _keyLastEventDescription, value: event.description);
+    await _secureStorage.write(
+        key: _keyLastEventLocation, value: event.location);
+    await _secureStorage.write(
+        key: _keyLastEventDescription, value: event.description);
   }
 
   /// Retrieves the last event entered by the user
@@ -46,11 +47,15 @@ class EventPreferences {
     final date = await _secureStorage.read(key: _keyLastEventDate);
     final time = await _secureStorage.read(key: _keyLastEventTime);
     final location = await _secureStorage.read(key: _keyLastEventLocation);
-    final description = await _secureStorage.read(key: _keyLastEventDescription);
+    final description =
+        await _secureStorage.read(key: _keyLastEventDescription);
 
     // Return null if any required field is missing
-    if (name == null || date == null || time == null || 
-        location == null || description == null) {
+    if (name == null ||
+        date == null ||
+        time == null ||
+        location == null ||
+        description == null) {
       return null;
     }
 

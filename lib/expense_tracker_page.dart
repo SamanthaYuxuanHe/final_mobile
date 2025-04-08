@@ -1,21 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'dart:convert';
 import 'expense_model.dart';
 import 'expense_database.dart';
 import 'database_debug_page.dart';
 
+/// A stateful widget that displays and manages expenses.
+///
+/// This page provides a UI for users to view, add, edit, and delete expenses.
+/// It includes features like copying previous expense data and responsive
+/// layout for different screen sizes.
 class ExpenseTrackerPage extends StatefulWidget {
-  const ExpenseTrackerPage({Key? key}) : super(key: key);
+  /// Creates an instance of [ExpenseTrackerPage].
+  const ExpenseTrackerPage({super.key});
 
   @override
-  _ExpenseTrackerPageState createState() => _ExpenseTrackerPageState();
+  State<ExpenseTrackerPage> createState() => _ExpenseTrackerPageState();
 }
 
+/// The state for [ExpenseTrackerPage].
+///
+/// Manages the list of expenses, the currently selected expense,
+/// and provides methods for CRUD operations on expenses.
 class _ExpenseTrackerPageState extends State<ExpenseTrackerPage> {
+  /// List of all expenses retrieved from the database.
   List<Expense> _expenses = [];
+
+  /// Currently selected expense for viewing or editing in wide screen layouts.
   Expense? _selectedExpense;
+
+  /// Instance of encrypted shared preferences for securely storing data.
   final _encryptedPrefs = EncryptedSharedPreferences();
 
   @override
@@ -24,6 +39,10 @@ class _ExpenseTrackerPageState extends State<ExpenseTrackerPage> {
     _loadExpenses();
   }
 
+  /// Loads all expenses from the database and updates the state.
+  ///
+  /// This method is called during initialization and after any changes
+  /// to the expense data.
   Future<void> _loadExpenses() async {
     final expenses = await ExpenseDatabase.instance.getAllExpenses();
     setState(() {
@@ -31,6 +50,10 @@ class _ExpenseTrackerPageState extends State<ExpenseTrackerPage> {
     });
   }
 
+  /// Shows a dialog asking if the user wants to start with a blank form
+  /// or copy data from the previous expense.
+  ///
+  /// The "Copy Previous" option is only enabled if there's a saved expense.
   Future<void> _showStartDialog() async {
     final lastExpenseJson = await _encryptedPrefs.getString('lastExpense');
     final hasPreviousExpense = lastExpenseJson.isNotEmpty;
@@ -41,25 +64,26 @@ class _ExpenseTrackerPageState extends State<ExpenseTrackerPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(AppLocalizations.of(context)!.copyPreviousExpense),
-          content: Text(AppLocalizations.of(context)!.copyPreviousExpenseMessage),
+          title: Text(translate('copyPreviousExpense')),
+          content: Text(translate('copyPreviousExpenseMessage')),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.pop(context);
                 _showExpenseForm(null, false);
               },
-              child: Text(AppLocalizations.of(context)!.startBlank),
+              child: Text(translate('startBlank')),
             ),
             TextButton(
               onPressed: hasPreviousExpense
                   ? () {
-                Navigator.pop(context);
-                _showExpenseForm(null, true);
-              }
+                      Navigator.pop(context);
+                      _showExpenseForm(null, true);
+                    }
                   : null,
               child: Text(
-                AppLocalizations.of(context)!.copyPrevious,
+                translate('copyPrevious'),
+
                 style: TextStyle(
                   color: hasPreviousExpense ? null : Colors.grey,
                 ),
@@ -71,7 +95,14 @@ class _ExpenseTrackerPageState extends State<ExpenseTrackerPage> {
     );
   }
 
-  // show
+  /// Shows an expense form for adding or editing expenses.
+  ///
+  /// In wide screen layouts, the form is shown in a side panel.
+  /// In narrow layouts, the form is shown in a dialog.
+  ///
+  /// [expense] is the expense to edit, or null to create a new expense.
+  /// [copyPrevious] determines whether to populate the form with data from
+  /// the previously saved expense.
   void _showExpenseForm(Expense? expense, bool copyPrevious) {
     final isWideScreen = MediaQuery.of(context).size.width > 600;
     if (isWideScreen && expense != null) {
@@ -100,8 +131,8 @@ class _ExpenseTrackerPageState extends State<ExpenseTrackerPage> {
                 SnackBar(
                   content: Text(
                     expense == null
-                        ? AppLocalizations.of(context)!.expenseAddedSuccessfully
-                        : AppLocalizations.of(context)!.expenseUpdatedSuccessfully,
+                        ? translate('expenseAddedSuccessfully')
+                        : translate('expenseUpdatedSuccessfully'),
                   ),
                 ),
               );
@@ -110,19 +141,19 @@ class _ExpenseTrackerPageState extends State<ExpenseTrackerPage> {
           onDelete: expense == null
               ? null
               : () async {
-            await ExpenseDatabase.instance.delete(expense.id!);
-            await _loadExpenses();
-            if (mounted) {
-              Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    AppLocalizations.of(context)!.expenseDeletedSuccessfully,
-                  ),
-                ),
-              );
-            }
-          },
+                  await ExpenseDatabase.instance.delete(expense.id!);
+                  await _loadExpenses();
+                  if (mounted) {
+                    Navigator.pop(context);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          translate('expenseDeletedSuccessfully'),
+                        ),
+                      ),
+                    );
+                  }
+                },
         );
       },
     );
@@ -134,7 +165,7 @@ class _ExpenseTrackerPageState extends State<ExpenseTrackerPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.expenseTracker),
+        title: Text(translate('expenseTracker')),
         actions: [
           IconButton(
             icon: Icon(Icons.storage),
@@ -153,23 +184,23 @@ class _ExpenseTrackerPageState extends State<ExpenseTrackerPage> {
               showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
-                  title: Text(AppLocalizations.of(context)!.howToUseTitle),
+                  title: Text(translate('howToUseTitle')),
                   content: SingleChildScrollView(
                     child: ListBody(
                       children: [
-                        Text('• ${AppLocalizations.of(context)!.addExpense}'),
-                        Text('• ${AppLocalizations.of(context)!.expenseName}'),
-                        Text('• ${AppLocalizations.of(context)!.category}'),
-                        Text('• ${AppLocalizations.of(context)!.amount}'),
-                        Text('• ${AppLocalizations.of(context)!.date}'),
-                        Text('• ${AppLocalizations.of(context)!.paymentMethod}'),
+                        Text('• ${translate('addExpense')}'),
+                        Text('• ${translate('expenseName')}'),
+                        Text('• ${translate('category')}'),
+                        Text('• ${translate('amount')}'),
+                        Text('• ${translate('date')}'),
+                        Text('• ${translate('paymentMethod')}'),
                       ],
                     ),
                   ),
                   actions: [
                     TextButton(
                       onPressed: () => Navigator.pop(context),
-                      child: Text('OK'),
+                      child: Text(translate('ok')),
                     ),
                   ],
                 ),
@@ -180,90 +211,110 @@ class _ExpenseTrackerPageState extends State<ExpenseTrackerPage> {
       ),
       body: isWideScreen
           ? Row(
-        children: [
-          Expanded(
-            flex: 2,
-            child: ListView.builder(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: ListView.builder(
+                    itemCount: _expenses.length,
+                    itemBuilder: (context, index) {
+                      final expense = _expenses[index];
+                      return ListTile(
+                        title: Text(expense.name),
+                        subtitle:
+                            Text('\$${expense.amount.toStringAsFixed(2)}'),
+                        onTap: () => setState(() => _selectedExpense = expense),
+                        selected: _selectedExpense?.id == expense.id,
+                      );
+                    },
+                  ),
+                ),
+                if (_selectedExpense != null)
+                  Expanded(
+                    flex: 3,
+                    child: Card(
+                      margin: EdgeInsets.all(16),
+                      child: ExpenseFormDialog(
+                        expense: _selectedExpense,
+                        copyPrevious: false,
+                        onSave: (Expense updatedExpense) async {
+                          await ExpenseDatabase.instance.update(updatedExpense);
+                          await _loadExpenses();
+                          setState(() {
+                            _selectedExpense = updatedExpense;
+                          });
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                translate('expenseUpdatedSuccessfully'),
+                              ),
+                            ),
+                          );
+                        },
+                        onDelete: () async {
+                          await ExpenseDatabase.instance
+                              .delete(_selectedExpense!.id!);
+                          await _loadExpenses();
+                          setState(() {
+                            _selectedExpense = null;
+                          });
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                translate('expenseDeletedSuccessfully'),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+              ],
+            )
+          : ListView.builder(
               itemCount: _expenses.length,
               itemBuilder: (context, index) {
                 final expense = _expenses[index];
                 return ListTile(
                   title: Text(expense.name),
-                  subtitle: Text('\$${expense.amount.toStringAsFixed(2)}'),
-                  onTap: () => setState(() => _selectedExpense = expense),
-                  selected: _selectedExpense?.id == expense.id,
+                  subtitle: Text(
+                      '\$${expense.amount.toStringAsFixed(2)} - ${expense.category}'),
+                  onTap: () => _showExpenseForm(expense, false),
                 );
               },
             ),
-          ),
-          if (_selectedExpense != null)
-            Expanded(
-              flex: 3,
-              child: Card(
-                margin: EdgeInsets.all(16),
-                child: ExpenseFormDialog(
-                  expense: _selectedExpense,
-                  copyPrevious: false,
-                  onSave: (Expense updatedExpense) async {
-                    await ExpenseDatabase.instance.update(updatedExpense);
-                    await _loadExpenses();
-                    setState(() {
-                      _selectedExpense = updatedExpense;
-                    });
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          AppLocalizations.of(context)!
-                              .expenseUpdatedSuccessfully,
-                        ),
-                      ),
-                    );
-                  },
-                  onDelete: () async {
-                    await ExpenseDatabase.instance.delete(_selectedExpense!.id!);
-                    await _loadExpenses();
-                    setState(() {
-                      _selectedExpense = null;
-                    });
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          AppLocalizations.of(context)!
-                              .expenseDeletedSuccessfully,
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ),
-        ],
-      )
-          : ListView.builder(
-        itemCount: _expenses.length,
-        itemBuilder: (context, index) {
-          final expense = _expenses[index];
-          return ListTile(
-            title: Text(expense.name),
-            subtitle: Text('\$${expense.amount.toStringAsFixed(2)} - ${expense.category}'),
-            onTap: () => _showExpenseForm(expense, false),
-          );
-        },
-      ),
       floatingActionButton: FloatingActionButton(
         onPressed: _showStartDialog,
         child: Icon(Icons.add),
-        tooltip: AppLocalizations.of(context)!.addExpense,
+        tooltip: translate('addExpense'),
       ),
     );
   }
 }
 
+/// A dialog that displays a form for adding or editing expenses.
+///
+/// This widget can be used both as a dialog in narrow layouts and
+/// as a panel in wide layouts.
 class ExpenseFormDialog extends StatefulWidget {
+  /// The expense to edit, or null to create a new expense.
   final Expense? expense;
+
+  /// Whether to populate the form with data from the previously saved expense.
   final bool copyPrevious;
+
+  /// Callback function called when the user saves an expense.
   final Function(Expense) onSave;
+
+  /// Callback function called when the user deletes an expense.
+  /// This is null when creating a new expense.
   final Function()? onDelete;
+
+  /// Creates an instance of [ExpenseFormDialog].
+  ///
+  /// The [copyPrevious] parameter determines whether to populate the form
+  /// with data from the previously saved expense.
+  /// The [onSave] callback is called when the user saves an expense.
+  /// The [onDelete] callback is called when the user deletes an expense.
 
   const ExpenseFormDialog({
     Key? key,
@@ -277,16 +328,47 @@ class ExpenseFormDialog extends StatefulWidget {
   _ExpenseFormDialogState createState() => _ExpenseFormDialogState();
 }
 
+/// The state for [ExpenseFormDialog].
+///
+/// Manages the form controllers and validation for expense data.
 class _ExpenseFormDialogState extends State<ExpenseFormDialog> {
+  /// Key for the form to enable validation.
   final _formKey = GlobalKey<FormState>();
+
+  /// Controller for the expense name field.
   late TextEditingController _nameController;
+
+  /// Controller for the expense amount field.
   late TextEditingController _amountController;
+
+  /// Controller for the expense date field.
   late TextEditingController _dateController;
+
+  /// Controller for the expense payment method field.
   late TextEditingController _paymentMethodController;
+
+  /// Currently selected category.
   late String _selectedCategory;
+
+  /// Instance of encrypted shared preferences for securely storing data.
   final _encryptedPrefs = EncryptedSharedPreferences();
-  final List<String> _categories = ['Food', 'Transport', 'Entertainment', 'Bills', 'Other'];
-  final List<String> _paymentMethods = ['Cash', 'Credit Card', 'Debit Card', 'Bank Transfer'];
+
+  /// List of available expense categories.
+  final List<String> _categories = [
+    'Food',
+    'Transport',
+    'Entertainment',
+    'Bills',
+    'Other'
+  ];
+
+  /// List of available payment methods.
+  final List<String> _paymentMethods = [
+    'Cash',
+    'Credit Card',
+    'Debit Card',
+    'Bank Transfer'
+  ];
 
   @override
   void initState() {
@@ -299,6 +381,11 @@ class _ExpenseFormDialogState extends State<ExpenseFormDialog> {
     _initializeControllers();
   }
 
+  /// Initializes form controllers based on the provided expense or the last saved expense.
+  ///
+  /// If [widget.expense] is not null, the form is populated with its data.
+  /// If [widget.copyPrevious] is true, the form is populated with data from
+  /// the previously saved expense.
   Future<void> _initializeControllers() async {
     if (widget.expense != null) {
       setState(() {
@@ -318,14 +405,15 @@ class _ExpenseFormDialogState extends State<ExpenseFormDialog> {
             _amountController.text = lastExpense['amount']?.toString() ?? '';
             _dateController.text = lastExpense['date'] ?? '';
             _selectedCategory = lastExpense['category'] ?? _categories[0];
-            _paymentMethodController.text = lastExpense['paymentMethod'] ?? _paymentMethods[0];
+            _paymentMethodController.text =
+                lastExpense['paymentMethod'] ?? _paymentMethods[0];
           });
         }
       } catch (e) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('Failed to load previous expense data'),
+              content: Text(translate('failedToLoadPreviousExpenseData')),
               backgroundColor: Colors.red,
             ),
           );
@@ -334,6 +422,9 @@ class _ExpenseFormDialogState extends State<ExpenseFormDialog> {
     }
   }
 
+  /// Shows a date picker and updates the date field with the selected date.
+  ///
+  /// The date is formatted as YYYY-MM-DD.
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -344,11 +435,14 @@ class _ExpenseFormDialogState extends State<ExpenseFormDialog> {
     if (picked != null) {
       setState(() {
         _dateController.text =
-        "${picked.year}-${picked.month.toString().padLeft(2, '0')}-${picked.day.toString().padLeft(2, '0')}";
+            "${picked.year}-${picked.month.toString().padLeft(2, '0')}-${picked.day.toString().padLeft(2, '0')}";
       });
     }
   }
 
+  /// Saves the current expense data to encrypted shared preferences.
+  ///
+  /// This data can be used to pre-fill the form when creating a new expense.
   Future<void> _saveLastExpense() async {
     final expenseData = {
       'name': _nameController.text,
@@ -364,8 +458,8 @@ class _ExpenseFormDialogState extends State<ExpenseFormDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(widget.expense == null
-          ? AppLocalizations.of(context)!.addExpense
-          : AppLocalizations.of(context)!.update),
+          ? translate('addExpense')
+          : translate('update')),
       content: SingleChildScrollView(
         child: Form(
           key: _formKey,
@@ -375,25 +469,25 @@ class _ExpenseFormDialogState extends State<ExpenseFormDialog> {
               TextFormField(
                 controller: _nameController,
                 decoration: InputDecoration(
-                  labelText: AppLocalizations.of(context)!.expenseName,
+                  labelText: translate('expenseName'),
                 ),
                 validator: (value) => value?.isEmpty ?? true
-                    ? AppLocalizations.of(context)!.pleaseEnterExpenseName
+                    ? translate('pleaseEnterExpenseName')
                     : null,
               ),
               TextFormField(
                 controller: _amountController,
                 decoration: InputDecoration(
-                  labelText: AppLocalizations.of(context)!.amount,
+                  labelText: translate('amount'),
                   prefixText: '\$',
                 ),
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
                 validator: (value) {
                   if (value?.isEmpty ?? true) {
-                    return AppLocalizations.of(context)!.pleaseEnterAmount;
+                    return translate('pleaseEnterAmount');
                   }
                   if (double.tryParse(value!) == null) {
-                    return AppLocalizations.of(context)!.pleaseEnterValidNumber;
+                    return translate('pleaseEnterValidNumber');
                   }
                   return null;
                 },
@@ -412,7 +506,7 @@ class _ExpenseFormDialogState extends State<ExpenseFormDialog> {
                   });
                 },
                 decoration: InputDecoration(
-                  labelText: AppLocalizations.of(context)!.category,
+                  labelText: translate('category'),
                 ),
               ),
               GestureDetector(
@@ -421,11 +515,11 @@ class _ExpenseFormDialogState extends State<ExpenseFormDialog> {
                   child: TextFormField(
                     controller: _dateController,
                     decoration: InputDecoration(
-                      labelText: AppLocalizations.of(context)!.date,
+                      labelText: translate('date'),
                       suffixIcon: Icon(Icons.calendar_today),
                     ),
                     validator: (value) => value?.isEmpty ?? true
-                        ? AppLocalizations.of(context)!.pleaseSelectDate
+                        ? translate('pleaseSelectDate')
                         : null,
                   ),
                 ),
@@ -446,7 +540,7 @@ class _ExpenseFormDialogState extends State<ExpenseFormDialog> {
                   });
                 },
                 decoration: InputDecoration(
-                  labelText: AppLocalizations.of(context)!.paymentMethod,
+                  labelText: translate('paymentMethod'),
                 ),
               ),
             ],
@@ -458,13 +552,13 @@ class _ExpenseFormDialogState extends State<ExpenseFormDialog> {
           TextButton(
             onPressed: widget.onDelete,
             child: Text(
-              AppLocalizations.of(context)!.delete,
+              translate('delete'),
               style: TextStyle(color: Colors.red),
             ),
           ),
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: Text('Cancel'),
+          child: Text(translate('cancel')),
         ),
         TextButton(
           onPressed: () async {
@@ -480,9 +574,8 @@ class _ExpenseFormDialogState extends State<ExpenseFormDialog> {
               ));
             }
           },
-          child: Text(widget.expense == null
-              ? AppLocalizations.of(context)!.save
-              : AppLocalizations.of(context)!.update),
+          child: Text(
+              widget.expense == null ? translate('save') : translate('update')),
         ),
       ],
     );
