@@ -1,8 +1,16 @@
+import 'package:final_mobile/database.dart';
+import 'package:floor/floor.dart';
 import 'package:final_mobile/event_planner_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'customer_list_page.dart';
 
+void main() async {
+  var delegate = await LocalizationDelegate.create(
+      fallbackLocale: 'en',
+      supportedLocales: ['en', 'zh'],
+      preferences: TranslatePreferences());
   runApp(LocalizedApp(delegate, const MyApp()));
 }
 
@@ -81,20 +89,21 @@ class MyHomePage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-
+              CustomButton(text: translate('button.1'), onPressed: () {}),
               SizedBox(height: 16),
-              // CustomButton(
-              //   text: translate('customer.list'),
-              //   onPressed: () {
-              //     Navigator.push(
-              //       context,
-              //       MaterialPageRoute(
-              //         builder: (context) => CustomerListPage(),
-              //       ),
-              //     );
-              //   },
-              // ),
+              CustomButton(
+                text: translate('customer.list'),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CustomerListPage(),
+                    ),
+                  );
+                },
+              ),
               SizedBox(height: 16),
+              CustomButton(text: translate('button.3'), onPressed: () {}),
 
               SizedBox(height: 16),
               CustomButton(text: translate('button.4'), onPressed: () {}),
@@ -136,3 +145,4 @@ class TranslatePreferences implements ITranslatePreferences {
   @override
   Future savePreferredLocale(Locale locale) async {}
 }
+
