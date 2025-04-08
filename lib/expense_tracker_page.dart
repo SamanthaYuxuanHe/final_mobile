@@ -83,6 +83,7 @@ class _ExpenseTrackerPageState extends State<ExpenseTrackerPage> {
                   : null,
               child: Text(
                 translate('copyPrevious'),
+
                 style: TextStyle(
                   color: hasPreviousExpense ? null : Colors.grey,
                 ),
@@ -314,6 +315,7 @@ class ExpenseFormDialog extends StatefulWidget {
   /// with data from the previously saved expense.
   /// The [onSave] callback is called when the user saves an expense.
   /// The [onDelete] callback is called when the user deletes an expense.
+
   const ExpenseFormDialog({
     Key? key,
     this.expense,
