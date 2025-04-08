@@ -1,16 +1,11 @@
+import 'package:final_mobile/event_planner_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-//import 'customer_list_page.dart';
-import 'expense_tracker_page.dart';
 
-void main() async {
-  var delegate = await LocalizationDelegate.create(
-      fallbackLocale: 'en',
-      supportedLocales: ['en', 'zh'],
-      preferences: TranslatePreferences());
   runApp(LocalizedApp(delegate, const MyApp()));
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -86,7 +81,7 @@ class MyHomePage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CustomButton(text: translate('button.1'), onPressed: () {}),
+
               SizedBox(height: 16),
               // CustomButton(
               //   text: translate('customer.list'),
@@ -100,17 +95,6 @@ class MyHomePage extends StatelessWidget {
               //   },
               // ),
               SizedBox(height: 16),
-              CustomButton(
-                text: translate('expenseTracker') ,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ExpenseTrackerPage(),
-                    ),
-                  );
-                },
-              ),
 
               SizedBox(height: 16),
               CustomButton(text: translate('button.4'), onPressed: () {}),
