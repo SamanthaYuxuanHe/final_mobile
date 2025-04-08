@@ -40,6 +40,7 @@
   "confirmDeleteMessage": "Are you sure you want to delete this expense?",
   "undo": "UNDO",
   "noExpensesYet": "No expenses yet. Tap + to add one.",
+  "message": "1. Tap 'Add customer' to add new customer\n2. Tab customer from list to see detail\n3.In detail page, can edit and delete customer information",
   "app": {
     "title": "Final Project"
   },

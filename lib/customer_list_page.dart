@@ -57,6 +57,25 @@ class _CustomerListPageState extends State<CustomerListPage> {
     });
   }
 
+  /// Shows a help dialog with information about using the app.
+  ///
+  /// The dialog content is localized using the translate function.
+  void _showHelpDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(translate('help_title')),
+        content: SingleChildScrollView(child: Text(translate('message'))),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(translate('cancel')),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,6 +111,11 @@ class _CustomerListPageState extends State<CustomerListPage> {
                   ),
                 );
               },
+            ),
+            IconButton(
+              icon: const Icon(Icons.help_outline),
+              onPressed: _showHelpDialog,
+              tooltip: translate('help'),
             ),
           ],
         ),
