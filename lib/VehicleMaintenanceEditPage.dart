@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:my_cst2335_labs/VehicleMaintenanceItem.dart';
-import 'package:my_cst2335_labs/VehicleMaintenancePage.dart';
+import 'VehicleMaintenanceItem.dart';
+import 'VehicleMaintenancePage.dart';
 import 'VehicleMaintenanceDataRepository.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const VehicleMaintenancePage());
 }
 
 class AddVehicleMaintenancePage extends StatelessWidget {
@@ -24,7 +24,7 @@ class AddVehicleMaintenancePage extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: "/",
       routes: {
-        '/first': (context) => MyApp(),
+        '/first': (context) => VehicleMaintenancePage(),
         '/AddVehicleMaintenance': (context) => AddVehicleMaintenancePage(),
         '/UpdateVehicleMaintenance': (context) =>
             UpdateVehicleMaintenancePage(),
@@ -49,7 +49,7 @@ class UpdateVehicleMaintenancePage extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: "/",
       routes: {
-        '/first': (context) => MyApp(),
+        '/first': (context) => VehicleMaintenancePage(),
         '/AddVehicleMaintenance': (context) => AddVehicleMaintenancePage(),
         '/UpdateVehicleMaintenance': (context) =>
             UpdateVehicleMaintenancePage(),
@@ -115,7 +115,8 @@ class _MyHomePageState extends State<MyHomePage> {
               TextField(
                 controller: vehicle_name,
                 decoration: InputDecoration(
-                    border: OutlineInputBorder(), hintText: translate('vehicle.vehicle_name')),
+                    border: OutlineInputBorder(),
+                    hintText: translate('vehicle.vehicle_name')),
                 onChanged: (String value) => {
                   VehicleMaintenanceDataRepository.saveData(
                       'vehicle_name', value)
@@ -124,7 +125,8 @@ class _MyHomePageState extends State<MyHomePage> {
               TextField(
                 controller: vehicle_type,
                 decoration: InputDecoration(
-                    border: OutlineInputBorder(), hintText: translate('vehicle.vehicle_type')),
+                    border: OutlineInputBorder(),
+                    hintText: translate('vehicle.vehicle_type')),
                 onChanged: (String value) => {
                   VehicleMaintenanceDataRepository.saveData(
                       'vehicle_type', value)
@@ -133,7 +135,8 @@ class _MyHomePageState extends State<MyHomePage> {
               TextField(
                 controller: service_type,
                 decoration: InputDecoration(
-                    border: OutlineInputBorder(), hintText: translate('vehicle.vehicle_type')),
+                    border: OutlineInputBorder(),
+                    hintText: translate('vehicle.vehicle_type')),
                 onChanged: (String value) => {
                   VehicleMaintenanceDataRepository.saveData(
                       'service_type', value)
@@ -142,7 +145,8 @@ class _MyHomePageState extends State<MyHomePage> {
               TextField(
                 controller: service_date,
                 decoration: InputDecoration(
-                    border: OutlineInputBorder(), hintText: translate('vehicle.service_date')),
+                    border: OutlineInputBorder(),
+                    hintText: translate('vehicle.service_date')),
                 onChanged: (String value) => {
                   VehicleMaintenanceDataRepository.saveData(
                       'service_date', value)
@@ -151,7 +155,8 @@ class _MyHomePageState extends State<MyHomePage> {
               TextField(
                 controller: mileage,
                 decoration: InputDecoration(
-                    border: OutlineInputBorder(), hintText: translate('vehicle.mileage')),
+                    border: OutlineInputBorder(),
+                    hintText: translate('vehicle.mileage')),
                 onChanged: (String value) => {
                   VehicleMaintenanceDataRepository.saveData('mileage', value)
                 },
@@ -159,7 +164,8 @@ class _MyHomePageState extends State<MyHomePage> {
               TextField(
                 controller: cost,
                 decoration: InputDecoration(
-                    border: OutlineInputBorder(), hintText: translate('vehicle.cost')),
+                    border: OutlineInputBorder(),
+                    hintText: translate('vehicle.cost')),
                 onChanged: (String value) =>
                     {VehicleMaintenanceDataRepository.saveData('Cost', value)},
               ),
@@ -189,7 +195,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 double.parse(cost.text));
             try {
               VehicleMaintenanceDataRepository.myDAO?.insertItem(newItem);
-            }catch(e){
+            } catch (e) {
               VehicleMaintenanceItem.ID++;
               VehicleMaintenanceDataRepository.myDAO?.insertItem(newItem);
             }
@@ -213,7 +219,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   double.parse(mileage.text),
                   double.parse(cost.text));
               myDAO?.updateItem(newItem);
-              myDAO?.findAllItems().then((listOfItems){
+              myDAO?.findAllItems().then((listOfItems) {
                 setState(() {
                   list.clear();
                   list.addAll(listOfItems);

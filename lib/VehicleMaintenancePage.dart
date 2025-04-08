@@ -6,8 +6,8 @@ import 'VehicleMaintenanceItem.dart';
 import 'VehicleMaintenanceEditPage.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class VehicleMaintenancePage extends StatelessWidget {
+  const VehicleMaintenancePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: "/",
       routes: {
-        '/first': (context) => MyApp(),
+        '/first': (context) => VehicleMaintenancePage(),
         '/AddVehicleMaintenance': (context) => AddVehicleMaintenancePage(),
         '/UpdateVehicleMaintenance': (context) =>
             UpdateVehicleMaintenancePage(),

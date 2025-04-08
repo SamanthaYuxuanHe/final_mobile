@@ -4,6 +4,7 @@
 /// This app demonstrates the use of Flutter's internationalization capabilities and
 /// provides a modular architecture for various business functions.
 
+import 'package:final_mobile/VehicleMaintenancePage.dart';
 import 'package:final_mobile/customer_list_page.dart';
 import 'package:final_mobile/event_planner_page.dart';
 import 'package:final_mobile/expense_tracker_page.dart';
@@ -159,7 +160,16 @@ class MyHomePage extends StatelessWidget {
                     );
                   }),
               SizedBox(height: 16),
-              CustomButton(text: translate('button.4'), onPressed: () {}),
+              CustomButton(
+                  text: translate('button.4'),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const VehicleMaintenancePage(),
+                      ),
+                    );
+                  }),
             ],
           ),
         ),
