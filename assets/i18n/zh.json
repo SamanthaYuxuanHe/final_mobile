@@ -1,43 +1,43 @@
 {
-  "app": {
-    "title": "最终项目"
-  },
-  "home": {
-    "title": "主页面"
-  },
-  "language": {
-    "select": "选择语言"
-  },
-  "button": {
-    "1": "按钮1",
-    "3": "按钮3",
-    "4": "按钮4",
-    "ok": "确认"
-  },
-  "customer": {
-    "list": "客户列表",
-    "no_customers": "没有可用的客户，请添加一个。",
-    "add": "添加客户",
-    "details": "客户详情",
-    "select": "选择一个客户查看详情",
-    "first_name": "名字",
-    "last_name": "姓氏",
-    "address": "地址",
-    "birthday": "生日 (YYYY-MM-DD)",
-    "update": "更新",
-    "delete": "删除",
-    "added": "客户已添加",
-    "added_success": "客户添加成功！",
-    "update_success": "客户详情已更新。",
-    "update_failed": "更新失败",
-    "delete_success": "客户已删除",
-    "delete_message": "该客户已从数据库中删除。",
-    "delete_failed": "删除失败",
-    "alert": "警告！",
-    "error": "添加客户时发生错误。",
-    "fill_fields": "请正确填写所有字段！",
-    "confirm_delete": "您要删除此客户吗？",
-    "yes": "是",
-    "no": "否"
+    "app": {
+      "title": "最终项目"
+    },
+    "home": {
+      "title": "主页面"
+    },
+    "language": {
+      "select": "选择语言"
+    },
+    "button": {
+      "1": "事件计划",
+      "3": "按钮3",
+      "4": "按钮4",
+      "ok": "确认"
+    },
+    "customer": {
+      "list": "客户列表",
+      "no_customers": "没有可用的客户，请添加一个。",
+      "add": "添加客户",
+      "details": "客户详情",
+      "select": "选择一个客户查看详情",
+      "first_name": "名字",
+      "last_name": "姓氏",
+      "address": "地址",
+      "birthday": "生日 (YYYY-MM-DD)",
+      "update": "更新",
+      "delete": "删除",
+      "added": "客户已添加",
+      "added_success": "客户添加成功！",
+      "update_success": "客户详情已更新。",
+      "update_failed": "更新失败",
+      "delete_success": "客户已删除",
+      "delete_message": "该客户已从数据库中删除。",
+      "delete_failed": "删除失败",
+      "alert": "警告！",
+      "error": "添加客户时发生错误。",
+      "fill_fields": "请正确填写所有字段！",
+      "confirm_delete": "您要删除此客户吗？",
+      "yes": "是",
+      "no": "否"
+    }
   }
-}

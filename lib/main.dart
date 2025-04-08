@@ -1,5 +1,6 @@
 import 'package:final_mobile/database.dart';
 import 'package:floor/floor.dart';
+import 'package:final_mobile/event_planner_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -12,6 +13,7 @@ void main() async {
       preferences: TranslatePreferences());
   runApp(LocalizedApp(delegate, const MyApp()));
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -102,6 +104,7 @@ class MyHomePage extends StatelessWidget {
               ),
               SizedBox(height: 16),
               CustomButton(text: translate('button.3'), onPressed: () {}),
+
               SizedBox(height: 16),
               CustomButton(text: translate('button.4'), onPressed: () {}),
             ],
@@ -142,3 +145,4 @@ class TranslatePreferences implements ITranslatePreferences {
   @override
   Future savePreferredLocale(Locale locale) async {}
 }
+

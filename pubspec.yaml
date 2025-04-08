@@ -28,10 +28,8 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  flutter_localizations:
-    sdk: flutter
 
-  flutter:
+  flutter_localizations:
     sdk: flutter
   floor: ^1.4.0
 
@@ -70,7 +68,7 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-
+  generate: true
   # To add assets to your application, add an assets section, like this:
   assets:
    - assets/i18n/
