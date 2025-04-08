@@ -119,5 +119,26 @@
     "help_title": "Event Planner Help",
     "help_message": "To add a new event, tap the plus button and fill all required fields.\n\nTo view event details, tap on an event from the list.\n\nTo update an event, view its details and edit the fields, then tap Update.\n\nTo delete an event, view its details and tap Delete.\n\nYou can copy information from your previous event by tapping \"Copy from Previous\" when adding a new event.",
     "pick_date": "Pick a date",
-    "pick_time": "Pick a time"
+    "pick_time": "Pick a time",
+
+    "vehicle":{
+      "list": "Vehicle Maintenance List",
+      "add_maintenance": "Add Vehicle Maintenance",
+      "empty_list": "There are no items in the list",
+      "update": "Update",
+      "update_alert": "Update this item?",
+      "no": "No",
+      "yes": "Yes",
+      "add_page_title": "Add Vehicle Maintenance",
+      "update_page_title": "Update Vehicle Maintenance",
+      "maintenance_page": "Vehicle Maintenance Page",
+      "vehicle_name": "Vehicle Name",
+      "vehicle_type": "Vehicle Type",
+      "service_type": "Service Type",
+      "service_date": "Service Date",
+      "mileage": "Mileage",
+      "cost": "Cost",
+      "add": "Add",
+      "delete": "Delete"
+  }
   }

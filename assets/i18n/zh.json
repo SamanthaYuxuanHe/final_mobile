@@ -119,6 +119,27 @@
       "help_title": "事件规划器帮助",
       "help_message": "要添加新事件，请点击加号按钮并填写所有必填字段。\n\n要查看事件详情,请点击列表中的事件。\n\n要更新事件,请查看其详情并修改字段，然后点击更新。\n\n要删除事件,请查看其详情并点击删除。\n\n您可以在添加新事件时,通过点击“复制之前的”来复制上一个事件的信息。",
       "pick_date": "选择日期",
-      "pick_time": "选择时间"
+      "pick_time": "选择时间",
+
+      "vehicle": {
+        "list": "车辆保养清单",
+        "add_maintenance": "添加车辆保养",
+        "empty_list": "列表中没有项目",
+        "update": "更新",
+        "update_alert": "更新此项目？",
+        "no": "否",
+        "yes": "是",
+        "add_page_title": "添加车辆保养",
+        "update_page_title": "更新车辆保养",
+        "maintenance_page": "车辆保养页面",
+        "vehicle_name": "车辆名称",
+        "vehicle_type": "车辆类型",
+        "service_type": "服务类型",
+        "service_date": "服务日期",
+        "mileage": "里程",
+        "cost": "费用",
+        "add": "添加",
+        "delete": "删除"
+      }
   }
   
