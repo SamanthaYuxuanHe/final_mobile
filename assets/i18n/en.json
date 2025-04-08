@@ -12,9 +12,6 @@
   "pleaseSelectDate": "Please select a date",
   "paymentMethod": "Payment Method",
   "save": "Save",
-  "update": "Update",
-  "delete": "Delete",
-  "cancel": "Cancel",
   "copyPreviousExpense": "Copy Previous Expense",
   "copyPreviousExpenseMessage": "Would you like to start with a blank form or copy fields from your last expense?",
   "startBlank": "Start Blank",
@@ -86,9 +83,7 @@
     "notice": "Notice",
     "previous": "Do you want to use previous data?"
   },
-  "en":
-  {
-    "app_title": "Group Project",
+  "app_title": "Group Project",
     "event_planner": "Event Planner",
     "customer_list": "Customer List",
     "expense_tracker": "Expense Tracker",
@@ -126,4 +121,3 @@
     "pick_date": "Pick a date",
     "pick_time": "Pick a time"
   }
-}

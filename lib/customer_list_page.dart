@@ -674,8 +674,9 @@ class _CustomerDetailPageState extends State<CustomerDetailPage> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        bool isWideScreen = constraints.maxWidth > constraints.maxHeight &&
-            constraints.maxWidth > 720;
+        bool isWideScreen = MediaQuery.of(context).size.width >
+                MediaQuery.of(context).size.height &&
+            MediaQuery.of(context).size.width > 720;
         return Scaffold(
           appBar: AppBar(
             automaticallyImplyLeading: !isWideScreen,
