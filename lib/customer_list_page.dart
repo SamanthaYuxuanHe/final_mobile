@@ -328,8 +328,8 @@ class _AddCustomerPageState extends State<AddCustomerPage> {
               false, // User must tap a button to dismiss the dialog
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text("Notice"),
-              content: Text("Do you want to use previous data?"),
+              title: Text(translate('customer.notice')),
+              content: Text(translate('customer.previous')),
               actions: [
                 TextButton(
                   onPressed: () {

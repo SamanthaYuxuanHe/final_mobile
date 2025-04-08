@@ -78,7 +78,9 @@
       "fill_fields": "请正确填写所有字段！",
       "confirm_delete": "您要删除此客户吗？",
       "yes": "是",
-      "no": "否"
+      "no": "否",
+      "notice": "通知",
+      "previous": "要使用之前存储的数据吗？"
     },
 
       "app_title": "团队项目",
