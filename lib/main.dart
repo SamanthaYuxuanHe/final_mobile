@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+//import 'customer_list_page.dart';
+import 'expense_tracker_page.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  var delegate = await LocalizationDelegate.create(
+      fallbackLocale: 'en',
+      supportedLocales: ['en', 'zh'],
+      preferences: TranslatePreferences());
+  runApp(LocalizedApp(delegate, const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -10,42 +17,103 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Final Project for Mobile',
-      debugShowCheckedModeBanner: false,
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      supportedLocales: [
-        Locale('en', 'US'),
-        Locale('zh', 'ZH'),
-      ],
-      home: MyHomePage(),
+    var localizationDelegate = LocalizedApp.of(context).delegate;
+    return LocalizationProvider(
+      state: LocalizationProvider.of(context).state,
+      child: MaterialApp(
+        title: translate('app.title'),
+        debugShowCheckedModeBanner: false,
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          localizationDelegate
+        ],
+        supportedLocales: localizationDelegate.supportedLocales,
+        locale: localizationDelegate.currentLocale,
+        theme: ThemeData(primarySwatch: Colors.blue),
+        home: MyHomePage(),
+      ),
     );
   }
 }
 
 class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
+  const MyHomePage({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Main")),
+      appBar: AppBar(
+        title: Text(translate('home.title')),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.language),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: Text(translate('language.select')),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ListTile(
+                        title: Text('English'),
+                        onTap: () {
+                          changeLocale(context, 'en');
+                          Navigator.pop(context);
+                        },
+                      ),
+                      ListTile(
+                        title: Text('中文'),
+                        onTap: () {
+                          changeLocale(context, 'zh');
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CustomButton(text: "Button 1", onPressed: () {}),
+              CustomButton(text: translate('button.1'), onPressed: () {}),
               SizedBox(height: 16),
-              CustomButton(text: "Button 2", onPressed: () {}),
+              // CustomButton(
+              //   text: translate('customer.list'),
+              //   onPressed: () {
+              //     Navigator.push(
+              //       context,
+              //       MaterialPageRoute(
+              //         builder: (context) => CustomerListPage(),
+              //       ),
+              //     );
+              //   },
+              // ),
               SizedBox(height: 16),
-              CustomButton(text: "Button 3", onPressed: () {}),
+              CustomButton(
+                text: translate('expenseTracker') ,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ExpenseTrackerPage(),
+                    ),
+                  );
+                },
+              ),
+
               SizedBox(height: 16),
-              CustomButton(text: "Button 4", onPressed: () {}),
+              CustomButton(text: translate('button.4'), onPressed: () {}),
             ],
           ),
         ),
@@ -73,4 +141,14 @@ class CustomButton extends StatelessWidget {
       child: Text(text),
     );
   }
+}
+
+class TranslatePreferences implements ITranslatePreferences {
+  @override
+  Future<Locale?> getPreferredLocale() async {
+    return const Locale('en');
+  }
+
+  @override
+  Future savePreferredLocale(Locale locale) async {}
 }
